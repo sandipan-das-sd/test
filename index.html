@@ -1,232 +1,11 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gyanoda - Gamified Learning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
-    <!-- Top Navigation -->
-    <nav class="bg-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 py-3">
-            <div class="flex justify-between items-center">
-                <div class="text-2xl font-bold text-blue-600">Gyanoda</div>
-                <div class="flex items-center space-x-4">
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-coins text-yellow-500"></i>
-                        <span>500</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <i class="fas fa-heart text-red-500"></i>
-                        <span>3</span>
-                    </div>
-                    <div class="w-10 h-10 bg-gray-200 rounded-full"></div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <!-- Game Stats -->
-        <div class="grid grid-cols-4 gap-4 mb-8">
-            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
-                <div>
-                    <div class="text-sm text-gray-500">Current Streak</div>
-                    <div class="text-2xl font-bold">7</div>
-                </div>
-                <i class="fas fa-fire text-2xl text-orange-500"></i>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
-                <div>
-                    <div class="text-sm text-gray-500">XP</div>
-                    <div class="text-2xl font-bold">2,450</div>
-                </div>
-                <i class="fas fa-star text-2xl text-yellow-500"></i>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
-                <div>
-                    <div class="text-sm text-gray-500">Level</div>
-                    <div class="text-2xl font-bold">15</div>
-                </div>
-                <i class="fas fa-trophy text-2xl text-purple-500"></i>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
-                <div>
-                    <div class="text-sm text-gray-500">Rank</div>
-                    <div class="text-2xl font-bold">#42</div>
-                </div>
-                <i class="fas fa-medal text-2xl text-blue-500"></i>
-            </div>
-        </div>
-
-        <!-- Main Game Area -->
-        <div class="grid grid-cols-3 gap-8">
-            <!-- Question Area -->
-            <div class="col-span-2">
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <!-- Question Header -->
-                    <div class="flex justify-between items-center mb-6">
-                        <div class="flex items-center space-x-2">
-                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Mathematics</span>
-                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Medium</span>
-                        </div>
-                        <div class="text-2xl font-bold text-gray-700">60s</div>
-                    </div>
-
-                    <!-- Question Content -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold mb-4">Find the value of x: √(x+1) - √(x-1) = √(4x-1)</h3>
-                        <img src="/api/placeholder/600/300" alt="Question diagram" class="rounded-lg mb-4" />
-                    </div>
-
-                    <!-- Answer Options -->
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
-                            x = 5/4
-                        </button>
-                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
-                            x = 4/5
-                        </button>
-                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
-                            x = 3/4
-                        </button>
-                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
-                            x = 6/5
-                        </button>
-                    </div>
-
-                    <!-- Power-ups -->
-                    <div class="flex justify-center space-x-4">
-                        <button class="bg-purple-100 p-3 rounded-full hover:bg-purple-200 transition-colors">
-                            <i class="fas fa-slash text-purple-600"></i>
-                            <span class="text-xs block">50:50</span>
-                        </button>
-                        <button class="bg-blue-100 p-3 rounded-full hover:bg-blue-200 transition-colors">
-                            <i class="fas fa-lightbulb text-blue-600"></i>
-                            <span class="text-xs block">Hint</span>
-                        </button>
-                        <button class="bg-green-100 p-3 rounded-full hover:bg-green-200 transition-colors">
-                            <i class="fas fa-clock text-green-600"></i>
-                            <span class="text-xs block">+30s</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Side Panel -->
-            <div class="space-y-6">
-                <!-- Progress -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span>Level Progress</span>
-                                <span>75%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-600 h-2 rounded-full" style="width: 75%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span>Daily Goal</span>
-                                <span>8/10</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-green-600 h-2 rounded-full" style="width: 80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Achievements -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Recent Achievements</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-bolt text-yellow-600"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Speed Demon</div>
-                                <div class="text-sm text-gray-500">Answer 5 questions under 30s</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                <i class="fas fa-brain text-blue-600"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold">Math Wizard</div>
-                                <div class="text-sm text-gray-500">Solve 100 math problems</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Leaderboard -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Today's Top Players</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <span class="text-xl font-bold text-yellow-500">1</span>
-                                <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
-                                <span>Alex S.</span>
-                            </div>
-                            <span>4,250 XP</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <span class="text-xl font-bold text-gray-400">2</span>
-                                <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
-                                <span>Maria R.</span>
-                            </div>
-                            <span>4,120 XP</span>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <span class="text-xl font-bold text-orange-500">3</span>
-                                <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
-                                <span>John D.</span>
-                            </div>
-                            <span>3,980 XP</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Achievement Popup -->
-    <div class="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 flex items-center space-x-3">
-        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-            <i class="fas fa-check text-green-600 text-xl"></i>
-        </div>
-        <div>
-            <div class="font-semibold">Achievement Unlocked!</div>
-            <div class="text-sm text-gray-500">First Perfect Score</div>
-        </div>
-    </div>
-
-    <!-- Chat Room Toggle -->
-    <button class="fixed bottom-4 left-4 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700">
-        <i class="fas fa-comments text-xl"></i>
-    </button>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gyanoda - Enhanced Gamified Learning</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .correct-answer {
             background-color: #86efac !important;
@@ -239,9 +18,6 @@
         .disabled {
             opacity: 0.5;
             pointer-events: none;
-        }
-        .hidden {
-            display: none;
         }
     </style>
 </head>
@@ -263,10 +39,6 @@
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-bolt text-orange-500"></i>
                         <span id="powerLevel">5</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <img src="/api/placeholder/40/40" alt="User Avatar" class="rounded-full">
-                        <span class="font-medium">Player123</span>
                     </div>
                 </div>
             </div>
@@ -292,17 +64,17 @@
             </div>
             <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
                 <div>
-                    <div class="text-sm text-gray-500">Level</div>
-                    <div id="playerLevel" class="text-2xl font-bold">1</div>
+                    <div class="text-sm text-gray-500">Score</div>
+                    <div id="score" class="text-2xl font-bold">0</div>
                 </div>
                 <i class="fas fa-trophy text-2xl text-purple-500"></i>
             </div>
             <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
                 <div>
-                    <div class="text-sm text-gray-500">Rank</div>
-                    <div id="globalRank" class="text-2xl font-bold">#100</div>
+                    <div class="text-sm text-gray-500">Question</div>
+                    <div id="questionNumber" class="text-2xl font-bold">1/5</div>
                 </div>
-                <i class="fas fa-medal text-2xl text-blue-500"></i>
+                <i class="fas fa-question text-2xl text-blue-500"></i>
             </div>
         </div>
 
@@ -317,42 +89,14 @@
                             <span id="questionSubject" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Mathematics</span>
                             <span id="questionDifficulty" class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Medium</span>
                         </div>
-                        <div id="timer" class="text-2xl font-bold text-gray-700">60s</div>
+                        <div id="timer" class="text-2xl font-bold text-gray-700">30s</div>
                     </div>
 
-                    <!-- Questions Container -->
-                    <div id="questionsContainer">
-                        <!-- Question 1 -->
-                        <div class="question-block" data-question="1">
-                            <h3 class="text-xl font-semibold mb-4">Find the value of x: √(x+1) - √(x-1) = √(4x-1)</h3>
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors" data-correct="true">x = 5/4</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 4/5</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 3/4</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 6/5</button>
-                            </div>
-                        </div>
-
-                        <!-- Question 2 -->
-                        <div class="question-block hidden" data-question="2">
-                            <h3 class="text-xl font-semibold mb-4">Solve for x: log₂(x + 3) = 4</h3>
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 16</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 11</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors" data-correct="true">x = 13</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 15</button>
-                            </div>
-                        </div>
-
-                        <!-- Question 3 -->
-                        <div class="question-block hidden" data-question="3">
-                            <h3 class="text-xl font-semibold mb-4">If sin θ = 3/5, find the value of cos θ:</h3>
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">3/5</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors" data-correct="true">4/5</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">5/3</button>
-                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">5/4</button>
-                            </div>
+                    <!-- Question Content -->
+                    <div id="questionContent">
+                        <h3 id="questionText" class="text-xl font-semibold mb-4"></h3>
+                        <div id="answerOptions" class="grid grid-cols-2 gap-4 mb-6">
+                            <!-- Answer options will be dynamically inserted here -->
                         </div>
                     </div>
 
@@ -375,24 +119,6 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Battle Mode Interface (Initially Hidden) -->
-                <div id="battleMode" class="mt-6 bg-white rounded-lg shadow-lg p-6 hidden">
-                    <h3 class="text-lg font-semibold mb-4">Battle Mode</h3>
-                    <div class="flex justify-between items-center">
-                        <div class="text-center">
-                            <div class="font-medium">You</div>
-                            <div class="text-2xl font-bold text-blue-600">3</div>
-                            <div class="text-sm text-gray-500">correct</div>
-                        </div>
-                        <div class="text-xl font-bold">VS</div>
-                        <div class="text-center">
-                            <div class="font-medium">Opponent</div>
-                            <div class="text-2xl font-bold text-red-600">2</div>
-                            <div class="text-sm text-gray-500">correct</div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Side Panel -->
@@ -410,56 +136,275 @@
                                 <div id="levelProgressBar" class="bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between text-sm mb-1">
-                                <span>Daily Goal</span>
-                                <span id="dailyProgress">0/10</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div id="dailyProgressBar" class="bg-green-600 h-2 rounded-full" style="width: 0%"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Daily Challenges -->
+                <!-- Question History -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Daily Challenges</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-star text-yellow-600"></i>
-                                </div>
-                                <div>
-                                    <div class="font-medium">Answer 20 Questions</div>
-                                    <div class="text-sm text-gray-500">Progress: 5/20</div>
-                                </div>
-                            </div>
-                            <div class="text-green-600">+50 coins</div>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                    <i class="fas fa-bolt text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <div class="font-medium">Get 5 Perfect Scores</div>
-                                    <div class="text-sm text-gray-500">Progress: 2/5</div>
-                                </div>
-                            </div>
-                            <div class="text-green-600">+100 coins</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Leaderboard -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-lg font-semibold mb-4">Today's Top Players</h3>
-                    <div class="space-y-4" id="leaderboard">
-                        <!-- Leaderboard entries will be dynamically updated -->
+                    <h3 class="text-lg font-semibold mb-4">Question History</h3>
+                    <div id="questionHistory" class="space-y-2">
+                        <!-- Question history will be dynamically updated -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Game state
+        const gameState = {
+            currentQuestion: 0,
+            score: 0,
+            streak: 0,
+            xp: 0,
+            lives: 3,
+            coins: 500,
+            timeLeft: 30,
+            timer: null,
+            questions: [
+                {
+                    text: "What is the value of π (pi) to two decimal places?",
+                    options: ["3.14", "3.12", "3.16", "3.18"],
+                    correct: 0,
+                    subject: "Mathematics",
+                    difficulty: "Easy"
+                },
+                {
+                    text: "Solve for x: 2x + 5 = 13",
+                    options: ["4", "3", "5", "6"],
+                    correct: 0,
+                    subject: "Mathematics",
+                    difficulty: "Medium"
+                },
+                {
+                    text: "What is the square root of 144?",
+                    options: ["12", "10", "14", "16"],
+                    correct: 0,
+                    subject: "Mathematics",
+                    difficulty: "Easy"
+                },
+                {
+                    text: "If sin θ = 0.5, what is θ in degrees?",
+                    options: ["30°", "45°", "60°", "90°"],
+                    correct: 0,
+                    subject: "Mathematics",
+                    difficulty: "Hard"
+                }
+            ]
+        };
+
+        // Initialize game
+        function initGame() {
+            updateStats();
+            loadQuestion();
+            startTimer();
+        }
+
+        // Load question
+        function loadQuestion() {
+            if (gameState.currentQuestion >= gameState.questions.length) {
+                endGame();
+                return;
+            }
+
+            const question = gameState.questions[gameState.currentQuestion];
+            document.getElementById('questionText').textContent = question.text;
+            document.getElementById('questionSubject').textContent = question.subject;
+            document.getElementById('questionDifficulty').textContent = question.difficulty;
+            document.getElementById('questionNumber').textContent = `${gameState.currentQuestion + 1}/${gameState.questions.length}`;
+
+            const answerOptions = document.getElementById('answerOptions');
+            answerOptions.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(index);
+                answerOptions.appendChild(button);
+            });
+        }
+
+        // Check answer
+        function checkAnswer(selectedIndex) {
+            const question = gameState.questions[gameState.currentQuestion];
+            const buttons = document.querySelectorAll('.answer-option');
+            buttons.forEach(button => button.classList.add('disabled'));
+
+            if (selectedIndex === question.correct) {
+                buttons[selectedIndex].classList.add('correct-answer');
+                updateScore(true);
+                updateStreak(true);
+            } else {
+                buttons[selectedIndex].classList.add('wrong-answer');
+                buttons[question.correct].classList.add('correct-answer');
+                updateStreak(false);
+                updateLives(-1);
+            }
+
+            // Add to question history
+            const historyDiv = document.getElementById('questionHistory');
+            const historyItem = document.createElement('div');
+            historyItem.className = `flex items-center space-x-2 ${selectedIndex === question.correct ? 'text-green-600' : 'text-red-600'}`;
+            historyItem.innerHTML = `
+                <i class="fas fa-${selectedIndex === question.correct ? 'check' : 'times'}"></i>
+                <span class="text-sm">Question ${gameState.currentQuestion + 1}</span>
+            `;
+            historyDiv.prepend(historyItem);
+
+            // Next question after delay
+            setTimeout(() => {
+                gameState.currentQuestion++;
+                gameState.timeLeft = 30;
+                loadQuestion();
+                enableAnswerButtons();
+            }, 1500);
+        }
+
+        // Timer function
+        function startTimer() {
+            if (gameState.timer) clearInterval(gameState.timer);
+            
+            gameState.timer = setInterval(() => {
+                gameState.timeLeft--;
+                document.getElementById('timer').textContent = gameState.timeLeft + 's';
+                
+                if (gameState.timeLeft <= 0) {
+                    clearInterval(gameState.timer);
+                    const buttons = document.querySelectorAll('.answer-option');
+                    buttons.forEach(button => button.click());
+                }
+            }, 1000);
+        }
+
+        // Update functions
+        function updateScore(correct) {
+            if (correct) {
+                gameState.score += 100 + Math.floor(gameState.timeLeft * 3.33);
+                gameState.xp += 10;
+            }
+            updateStats();
+        }
+
+        function updateStreak(correct) {
+            if (correct) {
+                gameState.streak++;
+            } else {
+                gameState.streak = 0;
+            }
+            updateStats();
+        }
+
+        function updateLives(change) {
+            gameState.lives += change;
+            if (gameState.lives <= 0) endGame();
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('score').textContent = gameState.score;
+            document.getElementById('currentStreak').textContent = gameState.streak;
+            document.getElementById('xpPoints').textContent = gameState.xp;
+            document.getElementById('livesRemaining').textContent = gameState.lives;
+            document.getElementById('coinBalance').textContent = gameState.coins;
+            
+            // Update level progress
+            const levelProgress = document.getElementById('levelProgress');
+            const levelProgressBar = document.getElementById('levelProgressBar');
+            levelProgress.textContent = `${gameState.xp}/100 XP`;
+            levelProgressBar.style.width = `${gameState.xp}%`;
+        }
+
+        function enableAnswerButtons() {
+            const buttons = document.querySelectorAll('.answer-option');
+            buttons.forEach(button => {
+                button.classList.remove('disabled', 'correct-answer', 'wrong-answer');
+            });
+        }
+
+        // Power-ups
+        function usePowerUp(type) {
+            const costs = {
+                fiftyFifty: 10,
+                hint: 15,
+                extraTime: 20
+            };
+
+            if (gameState.coins >= costs[type]) {
+                gameState.coins -= costs[type];
+                
+                switch(type) {
+                    case 'fiftyFifty':
+                        const buttons = Array.from(document.querySelectorAll('.answer-option'));
+                        const correctIndex = gameState.questions[gameState.currentQuestion].correct;
+                        const wrongAnswers = buttons.filter((_, index) => index !== correctIndex);
+                        wrongAnswers.sort(() => Math.random() - 0.5).slice(0, 2).forEach(button => {
+                            button.classList.add('disabled');
+                        });
+                        break;
+                    case 'extraTime':
+                        gameState.timeLeft += 30;
+                        break;
+                    case 'hint':
+                        const currentQuestion = gameState.questions[gameState.currentQuestion];
+                        const hintMessage = `Hint: The correct answer starts with "${currentQuestion.options[currentQuestion.correct][0]}"`;
+                        alert(hintMessage);
+                        break;
+                }
+                updateStats();
+            }
+        }
+
+        // End game
+        function endGame() {
+            clearInterval(gameState.timer);
+            
+            // Create end game overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center';
+            
+            const modal = document.createElement('div');
+            modal.className = 'bg-white p-8 rounded-lg shadow-xl max-w-md w-full';
+            modal.innerHTML = `
+                <h2 class="text-2xl font-bold mb-4">Game Over!</h2>
+                <div class="space-y-4 mb-6">
+                    <p class="text-lg">Final Score: ${gameState.score}</p>
+                    <p class="text-lg">XP Earned: ${gameState.xp}</p>
+                    <p class="text-lg">Max Streak: ${gameState.streak}</p>
+                </div>
+                <button onclick="restartGame()" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+                    Play Again
+                </button>
+            `;
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+        }
+
+        // Restart game
+        function restartGame() {
+            // Reset game state
+            gameState.currentQuestion = 0;
+            gameState.score = 0;
+            gameState.streak = 0;
+            gameState.xp = 0;
+            gameState.lives = 3;
+            gameState.timeLeft = 30;
+            gameState.coins = 500;
+
+            // Remove end game overlay
+            const overlay = document.querySelector('.fixed');
+            if (overlay) overlay.remove();
+
+            // Clear question history
+            document.getElementById('questionHistory').innerHTML = '';
+
+            // Restart game
+            initGame();
+        }
+
+        // Start the game when the page loads
+        window.onload = initGame;
+    </script>
+</body>
+</html>
