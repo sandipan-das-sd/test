@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyanoda - Gamified Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- Top Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-blue-600">Gyanoda</div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-coins text-yellow-500"></i>
+                        <span>500</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-heart text-red-500"></i>
+                        <span>3</span>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-200 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Game Stats -->
+        <div class="grid grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Current Streak</div>
+                    <div class="text-2xl font-bold">7</div>
+                </div>
+                <i class="fas fa-fire text-2xl text-orange-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">XP</div>
+                    <div class="text-2xl font-bold">2,450</div>
+                </div>
+                <i class="fas fa-star text-2xl text-yellow-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Level</div>
+                    <div class="text-2xl font-bold">15</div>
+                </div>
+                <i class="fas fa-trophy text-2xl text-purple-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Rank</div>
+                    <div class="text-2xl font-bold">#42</div>
+                </div>
+                <i class="fas fa-medal text-2xl text-blue-500"></i>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="grid grid-cols-3 gap-8">
+            <!-- Question Area -->
+            <div class="col-span-2">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <!-- Question Header -->
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Mathematics</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Medium</span>
+                        </div>
+                        <div class="text-2xl font-bold text-gray-700">60s</div>
+                    </div>
+
+                    <!-- Question Content -->
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-4">Find the value of x: √(x+1) - √(x-1) = √(4x-1)</h3>
+                        <img src="/api/placeholder/600/300" alt="Question diagram" class="rounded-lg mb-4" />
+                    </div>
+
+                    <!-- Answer Options -->
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
+                            x = 5/4
+                        </button>
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
+                            x = 4/5
+                        </button>
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
+                            x = 3/4
+                        </button>
+                        <button class="p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
+                            x = 6/5
+                        </button>
+                    </div>
+
+                    <!-- Power-ups -->
+                    <div class="flex justify-center space-x-4">
+                        <button class="bg-purple-100 p-3 rounded-full hover:bg-purple-200 transition-colors">
+                            <i class="fas fa-slash text-purple-600"></i>
+                            <span class="text-xs block">50:50</span>
+                        </button>
+                        <button class="bg-blue-100 p-3 rounded-full hover:bg-blue-200 transition-colors">
+                            <i class="fas fa-lightbulb text-blue-600"></i>
+                            <span class="text-xs block">Hint</span>
+                        </button>
+                        <button class="bg-green-100 p-3 rounded-full hover:bg-green-200 transition-colors">
+                            <i class="fas fa-clock text-green-600"></i>
+                            <span class="text-xs block">+30s</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Panel -->
+            <div class="space-y-6">
+                <!-- Progress -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Level Progress</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Daily Goal</span>
+                                <span>8/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-600 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Recent Achievements</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-bolt text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Speed Demon</div>
+                                <div class="text-sm text-gray-500">Answer 5 questions under 30s</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-brain text-blue-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold">Math Wizard</div>
+                                <div class="text-sm text-gray-500">Solve 100 math problems</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Today's Top Players</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-xl font-bold text-yellow-500">1</span>
+                                <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+                                <span>Alex S.</span>
+                            </div>
+                            <span>4,250 XP</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-xl font-bold text-gray-400">2</span>
+                                <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+                                <span>Maria R.</span>
+                            </div>
+                            <span>4,120 XP</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-xl font-bold text-orange-500">3</span>
+                                <div class="w-8 h-8 bg-gray-200 rounded-full"></div>
+                                <span>John D.</span>
+                            </div>
+                            <span>3,980 XP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Popup -->
+    <div class="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 flex items-center space-x-3">
+        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+            <i class="fas fa-check text-green-600 text-xl"></i>
+        </div>
+        <div>
+            <div class="font-semibold">Achievement Unlocked!</div>
+            <div class="text-sm text-gray-500">First Perfect Score</div>
+        </div>
+    </div>
+
+    <!-- Chat Room Toggle -->
+    <button class="fixed bottom-4 left-4 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700">
+        <i class="fas fa-comments text-xl"></i>
+    </button>
+</body>
+</html>
