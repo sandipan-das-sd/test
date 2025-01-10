@@ -19,6 +19,17 @@
             opacity: 0.5;
             pointer-events: none;
         }
+        .achievement-popup {
+            animation: slideIn 0.5s ease-out, fadeOut 0.5s ease-in 2.5s forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -28,6 +39,11 @@
             <div class="flex justify-between items-center">
                 <div class="text-2xl font-bold text-blue-600">Gyanoda</div>
                 <div class="flex items-center space-x-6">
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-2">
+                        <img id="userAvatar" src="/api/placeholder/32/32" alt="User Avatar" class="rounded-full w-8 h-8">
+                        <span id="userName" class="font-medium">Player123</span>
+                    </div>
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-coins text-yellow-500"></i>
                         <span id="coinBalance">500</span>
@@ -40,12 +56,62 @@
                         <i class="fas fa-bolt text-orange-500"></i>
                         <span id="powerLevel">5</span>
                     </div>
+                    <!-- Global Rank -->
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-trophy text-purple-500"></i>
+                        <span id="globalRank">#156</span>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- Achievement Popup Container -->
+    <div id="achievementPopups" class="fixed right-4 top-20 space-y-2 z-50"></div>
+
+    <!-- Chat Room -->
+    <div id="chatRoom" class="hidden fixed right-4 bottom-4 w-80 bg-white rounded-lg shadow-lg z-40">
+        <div class="p-4 border-b flex justify-between items-center">
+            <h3 class="font-semibold">Chat Room</h3>
+            <button onclick="toggleChat()" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatMessages" class="p-4 h-64 overflow-y-auto">
+            <!-- Chat messages will be added here -->
+        </div>
+        <div class="p-4 border-t">
+            <input type="text" id="chatInput" placeholder="Type a message..." 
+                   class="w-full p-2 border rounded-lg">
+        </div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Daily Challenges & Battle Mode Toggle -->
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex space-x-4">
+                <button onclick="toggleDailyChallenges()" 
+                        class="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Daily Challenges</span>
+                </button>
+                <button onclick="toggleBattleMode()" 
+                        class="bg-red-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                    <i class="fas fa-gamepad"></i>
+                    <span>Battle Mode</span>
+                </button>
+                <button onclick="toggleChat()" 
+                        class="bg-green-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat Room</span>
+                </button>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="text-sm text-gray-600">Clan:</span>
+                <span class="font-medium text-purple-600">Math Warriors</span>
+            </div>
+        </div>
+
         <!-- Game Stats -->
         <div class="grid grid-cols-4 gap-4 mb-8">
             <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
@@ -78,6 +144,28 @@
             </div>
         </div>
 
+        <!-- Battle Mode Area (Initially Hidden) -->
+        <div id="battleMode" class="hidden mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center space-x-4">
+                        <img src="/api/placeholder/40/40" alt="Player" class="rounded-full">
+                        <div class="text-lg font-semibold">You</div>
+                        <div class="text-2xl font-bold text-blue-600" id="playerScore">0</div>
+                    </div>
+                    <div class="text-xl font-bold">VS</div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-2xl font-bold text-red-600" id="opponentScore">0</div>
+                        <div class="text-lg font-semibold">Opponent</div>
+                        <img src="/api/placeholder/40/40" alt="Opponent" class="rounded-full">
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div id="battleProgress" class="bg-blue-600 h-4 rounded-full transition-all duration-500" style="width: 50%"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Game Area -->
         <div class="grid grid-cols-3 gap-8">
             <!-- Question Area -->
@@ -95,6 +183,10 @@
                     <!-- Question Content -->
                     <div id="questionContent">
                         <h3 id="questionText" class="text-xl font-semibold mb-4"></h3>
+                        <!-- Question Image (if available) -->
+                        <div id="questionImage" class="mb-4 hidden">
+                            <img src="" alt="Question Image" class="max-w-full rounded-lg">
+                        </div>
                         <div id="answerOptions" class="grid grid-cols-2 gap-4 mb-6">
                             <!-- Answer options will be dynamically inserted here -->
                         </div>
@@ -136,6 +228,32 @@
                                 <div id="levelProgressBar" class="bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
                             </div>
                         </div>
+                        <!-- Daily Goals -->
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Daily Goal</span>
+                                <span id="dailyGoalProgress">3/5 questions</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="dailyGoalBar" class="bg-green-600 h-2 rounded-full" style="width: 60%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Achievements -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Recent Achievements</h3>
+                    <div id="recentAchievements" class="space-y-3">
+                        <!-- Achievement items will be added here -->
+                    </div>
+                </div>
+
+                <!-- Live Leaderboard -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Leaderboard</h3>
+                    <div id="leaderboard" class="space-y-3">
+                        <!-- Leaderboard entries will be added here -->
                     </div>
                 </div>
 
@@ -151,7 +269,7 @@
     </div>
 
     <script>
-        // Game state
+        // Enhanced game state
         const gameState = {
             currentQuestion: 0,
             score: 0,
@@ -161,36 +279,76 @@
             coins: 500,
             timeLeft: 30,
             timer: null,
+            battleMode: false,
+            opponentScore: 0,
+            achievements: [],
+            dailyGoals: {
+                questionsAnswered: 3,
+                targetQuestions: 5
+            },
             questions: [
                 {
                     text: "What is the value of π (pi) to two decimal places?",
                     options: ["3.14", "3.12", "3.16", "3.18"],
                     correct: 0,
                     subject: "Mathematics",
-                    difficulty: "Easy"
+                    difficulty: "Easy",
+                    image: null
                 },
                 {
                     text: "Solve for x: 2x + 5 = 13",
                     options: ["4", "3", "5", "6"],
                     correct: 0,
                     subject: "Mathematics",
-                    difficulty: "Medium"
+                    difficulty: "Medium",
+                    image: null
                 },
                 {
                     text: "What is the square root of 144?",
                     options: ["12", "10", "14", "16"],
                     correct: 0,
                     subject: "Mathematics",
-                    difficulty: "Easy"
+                    difficulty: "Easy",
+                    image: null
                 },
                 {
                     text: "If sin θ = 0.5, what is θ in degrees?",
                     options: ["30°", "45°", "60°", "90°"],
                     correct: 0,
                     subject: "Mathematics",
-                    difficulty: "Hard"
+                    difficulty: "Hard",
+                    image: null
                 }
+            ],
+            leaderboard: [
+                { name: "Player123", score: 2500 },
+                { name: "MathWhiz", score: 2350 },
+                { name: "Brainiac", score: 2200 },
+                { name: "QuizMaster", score: 2100 },
+                { name: "Genius101", score: 2000 }
             ]
+        };
+
+        // Achievement definitions
+        const achievements = {
+            perfectScore: {
+                id: "perfectScore",
+                title: "Perfect Score!",
+                description: "Answer all questions correctly",
+                icon: "star"
+            },
+            speedDemon: {
+                id: "speedDemon",
+                title: "Speed Demon",
+                description: "Answer correctly in under 5 seconds",
+                icon: "bolt"
+            },
+            streakMaster: {
+                id: "streakMaster",
+                title: "Streak Master",
+                description: "Achieve a 5-question streak",
+                icon: "fire"
+            }
         };
 
         // Initialize game
@@ -198,6 +356,59 @@
             updateStats();
             loadQuestion();
             startTimer();
+            initLeaderboard();
+            initAchievements();
+            updateDailyGoals();
+        }
+
+        // Toggle Battle Mode
+        function toggleBattleMode() {
+            gameState.battleMode = !gameState.battleMode;
+            const battleModeElement = document.getElementById('battleMode');
+            battleModeElement.classList.toggle('hidden');
+            
+            if (gameState.battleMode) {
+                // Start simulated opponent progress
+                startOpponentProgress();
+            }
+        }
+
+        // Simulate opponent progress
+        function startOpponentProgress() {
+            setInterval(() => {
+                if (gameState.battleMode) {
+                    gameState.opponentScore += Math.floor(Math.random() * 20);
+                    updateBattleProgress();
+                }
+            }, 3000);
+        }
+
+        // Update battle progress
+        function updateBattleProgress() {
+            document.getElementById('playerScore').textContent = gameState.score;
+            document.getElementById('opponentScore').textContent = gameState.opponentScore;
+            
+            const totalScore = gameState.score + gameState.opponentScore;
+            const playerProgress = (gameState.score / totalScore) * 100;
+            document.getElementById('battleProgress').style.width = `${playerProgress}%`;
+        }
+
+        // Toggle Chat Room
+        function toggleChat() {
+            const chatRoom = document.getElementById('chatRoom');
+            chatRoom.classList.toggle('hidden');
+        }
+
+        // Toggle Daily Challenges
+        function toggleDailyChallenges() {
+            // Implement daily challenges popup
+            const challenges = [
+                "Complete 5 questions",
+                "Achieve a 3-question streak",
+                "Use 3 power-ups"
+            ];
+            
+            alert("Daily Challenges:\n\n" + challenges.join("\n"));
         }
 
         // Load question
@@ -213,6 +424,15 @@
             document.getElementById('questionDifficulty').textContent = question.difficulty;
             document.getElementById('questionNumber').textContent = `${gameState.currentQuestion + 1}/${gameState.questions.length}`;
 
+            // Handle question image if present
+            const questionImage = document.getElementById('questionImage');
+            if (question.image) {
+                questionImage.classList.remove('hidden');
+                questionImage.querySelector('img').src = question.image;
+            } else {
+                questionImage.classList.add('hidden');
+            }
+
             const answerOptions = document.getElementById('answerOptions');
             answerOptions.innerHTML = '';
             
@@ -225,16 +445,89 @@
             });
         }
 
+        // Show achievement popup
+        function showAchievementPopup(achievement) {
+            const popup = document.createElement('div');
+            popup.className = 'achievement-popup bg-white p-4 rounded-lg shadow-lg flex items-center space-x-3';
+            popup.innerHTML = `
+                <i class="fas fa-${achievement.icon} text-yellow-500 text-xl"></i>
+                <div>
+                    <div class="font-semibold">${achievement.title}</div>
+                    <div class="text-sm text-gray-600">${achievement.description}</div>
+                </div>
+            `;
+            
+            document.getElementById('achievementPopups').appendChild(popup);
+            setTimeout(() => popup.remove(), 3000);
+        }
+
+        // Initialize achievements
+        function initAchievements() {
+            const achievementsContainer = document.getElementById('recentAchievements');
+            achievementsContainer.innerHTML = '';
+            
+            Object.values(achievements).forEach(achievement => {
+                if (gameState.achievements.includes(achievement.id)) {
+                    const achievementElement = document.createElement('div');
+                    achievementElement.className = 'flex items-center space-x-2';
+                    achievementElement.innerHTML = `
+                        <i class="fas fa-${achievement.icon} text-yellow-500"></i>
+                        <span>${achievement.title}</span>
+                    `;
+                    achievementsContainer.appendChild(achievementElement);
+                }
+            });
+        }
+
+        // Initialize leaderboard
+        function initLeaderboard() {
+            const leaderboardContainer = document.getElementById('leaderboard');
+            leaderboardContainer.innerHTML = '';
+            
+            gameState.leaderboard.forEach((entry, index) => {
+                const entryElement = document.createElement('div');
+                entryElement.className = 'flex justify-between items-center';
+                entryElement.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <span class="font-medium">${index + 1}.</span>
+                        <span>${entry.name}</span>
+                    </div>
+                    <span class="font-semibold">${entry.score}</span>
+                `;
+                leaderboardContainer.appendChild(entryElement);
+            });
+        }
+
+        // Update daily goals
+        function updateDailyGoals() {
+            const { questionsAnswered, targetQuestions } = gameState.dailyGoals;
+            document.getElementById('dailyGoalProgress').textContent = 
+                `${questionsAnswered}/${targetQuestions} questions`;
+            document.getElementById('dailyGoalBar').style.width = 
+                `${(questionsAnswered / targetQuestions) * 100}%`;
+        }
+
         // Check answer
         function checkAnswer(selectedIndex) {
             const question = gameState.questions[gameState.currentQuestion];
             const buttons = document.querySelectorAll('.answer-option');
             buttons.forEach(button => button.classList.add('disabled'));
 
-            if (selectedIndex === question.correct) {
+            const isCorrect = selectedIndex === question.correct;
+            const answerTime = 30 - gameState.timeLeft;
+
+            if (isCorrect) {
                 buttons[selectedIndex].classList.add('correct-answer');
                 updateScore(true);
                 updateStreak(true);
+                
+                // Check for achievements
+                if (answerTime < 5) {
+                    unlockAchievement('speedDemon');
+                }
+                if (gameState.streak === 5) {
+                    unlockAchievement('streakMaster');
+                }
             } else {
                 buttons[selectedIndex].classList.add('wrong-answer');
                 buttons[question.correct].classList.add('correct-answer');
@@ -242,12 +535,16 @@
                 updateLives(-1);
             }
 
+            // Update daily goals
+            gameState.dailyGoals.questionsAnswered++;
+            updateDailyGoals();
+
             // Add to question history
             const historyDiv = document.getElementById('questionHistory');
             const historyItem = document.createElement('div');
-            historyItem.className = `flex items-center space-x-2 ${selectedIndex === question.correct ? 'text-green-600' : 'text-red-600'}`;
+            historyItem.className = `flex items-center space-x-2 ${isCorrect ? 'text-green-600' : 'text-red-600'}`;
             historyItem.innerHTML = `
-                <i class="fas fa-${selectedIndex === question.correct ? 'check' : 'times'}"></i>
+                <i class="fas fa-${isCorrect ? 'check' : 'times'}"></i>
                 <span class="text-sm">Question ${gameState.currentQuestion + 1}</span>
             `;
             historyDiv.prepend(historyItem);
@@ -259,6 +556,20 @@
                 loadQuestion();
                 enableAnswerButtons();
             }, 1500);
+
+            // Update battle mode if active
+            if (gameState.battleMode) {
+                updateBattleProgress();
+            }
+        }
+
+        // Unlock achievement
+        function unlockAchievement(achievementId) {
+            if (!gameState.achievements.includes(achievementId)) {
+                gameState.achievements.push(achievementId);
+                showAchievementPopup(achievements[achievementId]);
+                initAchievements();
+            }
         }
 
         // Timer function
@@ -359,6 +670,11 @@
         function endGame() {
             clearInterval(gameState.timer);
             
+            // Check for perfect score achievement
+            if (gameState.score === gameState.questions.length * 100) {
+                unlockAchievement('perfectScore');
+            }
+            
             // Create end game overlay
             const overlay = document.createElement('div');
             overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center';
@@ -371,14 +687,46 @@
                     <p class="text-lg">Final Score: ${gameState.score}</p>
                     <p class="text-lg">XP Earned: ${gameState.xp}</p>
                     <p class="text-lg">Max Streak: ${gameState.streak}</p>
+                    <p class="text-lg">Achievements Unlocked: ${gameState.achievements.length}</p>
                 </div>
                 <button onclick="restartGame()" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
                     Play Again
                 </button>
-            `;
-            
+                <button onclick="shareScore()" class="w-full mt-2 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition-colors">
+                    Share Score
+                </button>
+            </modal>
             overlay.appendChild(modal);
             document.body.appendChild(overlay);
+
+            // Update leaderboard with new score
+            if (gameState.score > 0) {
+                updateLeaderboard();
+            }
+        }
+
+        // Share score function
+        function shareScore() {
+            const shareText = `I scored ${gameState.score} points in Gyanoda Learning Game! Can you beat my score?`;
+            alert('Sharing score: ' + shareText);
+            // In a real implementation, this would integrate with social media APIs
+        }
+
+        // Update leaderboard with new score
+        function updateLeaderboard() {
+            gameState.leaderboard.push({
+                name: document.getElementById('userName').textContent,
+                score: gameState.score
+            });
+            
+            // Sort leaderboard by score
+            gameState.leaderboard.sort((a, b) => b.score - a.score);
+            
+            // Keep only top 5
+            gameState.leaderboard = gameState.leaderboard.slice(0, 5);
+            
+            // Update display
+            initLeaderboard();
         }
 
         // Restart game
@@ -391,6 +739,12 @@
             gameState.lives = 3;
             gameState.timeLeft = 30;
             gameState.coins = 500;
+            gameState.dailyGoals.questionsAnswered = 0;
+
+            // Reset battle mode
+            gameState.battleMode = false;
+            gameState.opponentScore = 0;
+            document.getElementById('battleMode').classList.add('hidden');
 
             // Remove end game overlay
             const overlay = document.querySelector('.fixed');
@@ -399,12 +753,195 @@
             // Clear question history
             document.getElementById('questionHistory').innerHTML = '';
 
+            // Reset achievements for new game
+            gameState.achievements = [];
+            initAchievements();
+
+            // Clear chat
+            document.getElementById('chatMessages').innerHTML = '';
+            document.getElementById('chatRoom').classList.add('hidden');
+
+            // Update all displays
+            updateStats();
+            updateDailyGoals();
+            initLeaderboard();
+
             // Restart game
             initGame();
         }
 
+        // Add chat message
+        function addChatMessage(message, isUser = true) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.className = `mb-2 ${isUser ? 'text-right' : 'text-left'}`;
+            messageElement.innerHTML = `
+                <span class="inline-block ${isUser ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded-lg px-3 py-2">
+                    ${message}
+                </span>
+            `;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Handle chat input
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim()) {
+                addChatMessage(this.value.trim());
+                // Simulate response (in real implementation, this would connect to backend)
+                setTimeout(() => {
+                    addChatMessage('Keep up the great work! 👍', false);
+                }, 1000);
+                this.value = '';
+            }
+        });
+
         // Start the game when the page loads
         window.onload = initGame;
+
+        // Handle clan/group features
+        function initClanFeatures() {
+            const clanData = {
+                name: "Math Warriors",
+                members: 25,
+                weeklyScore: 12500,
+                rank: 3
+            };
+
+            // Add clan achievements
+            const clanAchievements = [
+                { title: "Top 5 Clan", icon: "trophy", date: "2024-01-08" },
+                { title: "100% Team Activity", icon: "users", date: "2024-01-07" },
+                { title: "Weekly Champions", icon: "crown", date: "2024-01-06" }
+            ];
+
+            // Update clan info if needed
+            document.querySelector('.clan-info').innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="font-medium">${clanData.name}</span>
+                    <span class="text-sm text-gray-600">Rank #${clanData.rank}</span>
+                </div>
+            `;
+        }
+
+        // Handle team challenges
+        function initTeamChallenges() {
+            const teamChallenges = [
+                {
+                    title: "Group Study",
+                    description: "Complete 50 questions as a team",
+                    progress: 35,
+                    reward: "500 Team Coins"
+                },
+                {
+                    title: "Perfect Sync",
+                    description: "All team members maintain 5-streak",
+                    progress: 80,
+                    reward: "Special Badge"
+                }
+            ];
+        }
+
+        // Sound effects
+        const soundEffects = {
+            correct: new Audio('/sounds/correct.mp3'),
+            wrong: new Audio('/sounds/wrong.mp3'),
+            achievement: new Audio('/sounds/achievement.mp3'),
+            levelUp: new Audio('/sounds/levelup.mp3')
+        };
+
+        function playSound(effect) {
+            try {
+                soundEffects[effect].play();
+            } catch (error) {
+                console.log('Sound effect not available');
+            }
+        }
+
+        // Level up handling
+        function checkLevelUp() {
+            const previousLevel = Math.floor(gameState.xp / 100);
+            const currentLevel = Math.floor((gameState.xp + 10) / 100);
+            
+            if (currentLevel > previousLevel) {
+                showLevelUpAnimation(currentLevel);
+                playSound('levelUp');
+            }
+        }
+
+        function showLevelUpAnimation(level) {
+            const animation = document.createElement('div');
+            animation.className = 'fixed inset-0 flex items-center justify-center z-50';
+            animation.innerHTML = `
+                <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+                    <i class="fas fa-level-up-alt text-4xl text-yellow-500 mb-4"></i>
+                    <h2 class="text-2xl font-bold">Level Up!</h2>
+                    <p class="text-xl">You've reached level ${level}</p>
+                </div>
+            `;
+            document.body.appendChild(animation);
+            setTimeout(() => animation.remove(), 2000);
+        }
+
+        // Initialize tooltips
+        function initTooltips() {
+            const tooltips = document.querySelectorAll('[data-tooltip]');
+            tooltips.forEach(element => {
+                element.addEventListener('mouseover', (e) => {
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'absolute bg-black text-white p-2 rounded text-sm z-50';
+                    tooltip.textContent = element.dataset.tooltip;
+                    document.body.appendChild(tooltip);
+
+                    const rect = element.getBoundingClientRect();
+                    tooltip.style.top = rect.bottom + 5 + 'px';
+                    tooltip.style.left = rect.left + 'px';
+
+                    element.addEventListener('mouseout', () => tooltip.remove());
+                });
+            });
+        }
+
+        // Initialize keyboard shortcuts
+        function initKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                        // Select answer options
+                        const index = parseInt(e.key) - 1;
+                        const buttons = document.querySelectorAll('.answer-option');
+                        if (buttons[index]) buttons[index].click();
+                        break;
+                    case 'h':
+                        // Use hint power-up
+                        document.getElementById('hint').click();
+                        break;
+                    case 't':
+                        // Use extra time power-up
+                        document.getElementById('extraTime').click();
+                        break;
+                    case 'f':
+                        // Use fifty-fifty power-up
+                        document.getElementById('fiftyFifty').click();
+                        break;
+                }
+            });
+        }
+
+        // Initialize everything when the game starts
+        function initializeAll() {
+            initGame();
+            initClanFeatures();
+            initTeamChallenges();
+            initTooltips();
+            initKeyboardShortcuts();
+        }
+
+        // Start the game with all features
+        window.onload = initializeAll;
     </script>
 </body>
 </html>
