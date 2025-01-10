@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -217,4 +217,249 @@
         <i class="fas fa-comments text-xl"></i>
     </button>
 </body>
-</html>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyanoda - Enhanced Gamified Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .correct-answer {
+            background-color: #86efac !important;
+            border-color: #22c55e !important;
+        }
+        .wrong-answer {
+            background-color: #fecaca !important;
+            border-color: #ef4444 !important;
+        }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Top Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-blue-600">Gyanoda</div>
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-coins text-yellow-500"></i>
+                        <span id="coinBalance">500</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-heart text-red-500"></i>
+                        <span id="livesRemaining">3</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-bolt text-orange-500"></i>
+                        <span id="powerLevel">5</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <img src="/api/placeholder/40/40" alt="User Avatar" class="rounded-full">
+                        <span class="font-medium">Player123</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Game Stats -->
+        <div class="grid grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Current Streak</div>
+                    <div id="currentStreak" class="text-2xl font-bold">0</div>
+                </div>
+                <i class="fas fa-fire text-2xl text-orange-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">XP</div>
+                    <div id="xpPoints" class="text-2xl font-bold">0</div>
+                </div>
+                <i class="fas fa-star text-2xl text-yellow-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Level</div>
+                    <div id="playerLevel" class="text-2xl font-bold">1</div>
+                </div>
+                <i class="fas fa-trophy text-2xl text-purple-500"></i>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-gray-500">Rank</div>
+                    <div id="globalRank" class="text-2xl font-bold">#100</div>
+                </div>
+                <i class="fas fa-medal text-2xl text-blue-500"></i>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="grid grid-cols-3 gap-8">
+            <!-- Question Area -->
+            <div class="col-span-2">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <!-- Question Header -->
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="flex items-center space-x-2">
+                            <span id="questionSubject" class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Mathematics</span>
+                            <span id="questionDifficulty" class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Medium</span>
+                        </div>
+                        <div id="timer" class="text-2xl font-bold text-gray-700">60s</div>
+                    </div>
+
+                    <!-- Questions Container -->
+                    <div id="questionsContainer">
+                        <!-- Question 1 -->
+                        <div class="question-block" data-question="1">
+                            <h3 class="text-xl font-semibold mb-4">Find the value of x: √(x+1) - √(x-1) = √(4x-1)</h3>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors" data-correct="true">x = 5/4</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 4/5</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 3/4</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 6/5</button>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="question-block hidden" data-question="2">
+                            <h3 class="text-xl font-semibold mb-4">Solve for x: log₂(x + 3) = 4</h3>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 16</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 11</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors" data-correct="true">x = 13</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">x = 15</button>
+                            </div>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="question-block hidden" data-question="3">
+                            <h3 class="text-xl font-semibold mb-4">If sin θ = 3/5, find the value of cos θ:</h3>
+                            <div class="grid grid-cols-2 gap-4 mb-6">
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">3/5</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors" data-correct="true">4/5</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">5/3</button>
+                                <button class="answer-option p-4 border-2 border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">5/4</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Power-ups -->
+                    <div class="flex justify-center space-x-4">
+                        <button id="fiftyFifty" class="power-up bg-purple-100 p-3 rounded-full hover:bg-purple-200 transition-colors" onclick="usePowerUp('fiftyFifty')">
+                            <i class="fas fa-slash text-purple-600"></i>
+                            <span class="text-xs block">50:50</span>
+                            <span class="text-xs">10 coins</span>
+                        </button>
+                        <button id="hint" class="power-up bg-blue-100 p-3 rounded-full hover:bg-blue-200 transition-colors" onclick="usePowerUp('hint')">
+                            <i class="fas fa-lightbulb text-blue-600"></i>
+                            <span class="text-xs block">Hint</span>
+                            <span class="text-xs">15 coins</span>
+                        </button>
+                        <button id="extraTime" class="power-up bg-green-100 p-3 rounded-full hover:bg-green-200 transition-colors" onclick="usePowerUp('extraTime')">
+                            <i class="fas fa-clock text-green-600"></i>
+                            <span class="text-xs block">+30s</span>
+                            <span class="text-xs">20 coins</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Battle Mode Interface (Initially Hidden) -->
+                <div id="battleMode" class="mt-6 bg-white rounded-lg shadow-lg p-6 hidden">
+                    <h3 class="text-lg font-semibold mb-4">Battle Mode</h3>
+                    <div class="flex justify-between items-center">
+                        <div class="text-center">
+                            <div class="font-medium">You</div>
+                            <div class="text-2xl font-bold text-blue-600">3</div>
+                            <div class="text-sm text-gray-500">correct</div>
+                        </div>
+                        <div class="text-xl font-bold">VS</div>
+                        <div class="text-center">
+                            <div class="font-medium">Opponent</div>
+                            <div class="text-2xl font-bold text-red-600">2</div>
+                            <div class="text-sm text-gray-500">correct</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Panel -->
+            <div class="space-y-6">
+                <!-- Progress -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Your Progress</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Level Progress</span>
+                                <span id="levelProgress">0/100 XP</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="levelProgressBar" class="bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Daily Goal</span>
+                                <span id="dailyProgress">0/10</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div id="dailyProgressBar" class="bg-green-600 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Challenges -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Daily Challenges</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-star text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Answer 20 Questions</div>
+                                    <div class="text-sm text-gray-500">Progress: 5/20</div>
+                                </div>
+                            </div>
+                            <div class="text-green-600">+50 coins</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-bolt text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <div class="font-medium">Get 5 Perfect Scores</div>
+                                    <div class="text-sm text-gray-500">Progress: 2/5</div>
+                                </div>
+                            </div>
+                            <div class="text-green-600">+100 coins</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Today's Top Players</h3>
+                    <div class="space-y-4" id="leaderboard">
+                        <!-- Leaderboard entries will be dynamically updated -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
